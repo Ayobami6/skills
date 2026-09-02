@@ -6,7 +6,27 @@
 
 An open-source, curated collection of modular skills for **Google Antigravity** and compatible AI coding agents.
 
-Keep your AI agent equipped with the same specialized workflows, review checklists, and automated procedures across all your projects and machines.
+Equip your AI agents with specialized workflows, review checklists, and automated procedures across all your projects.
+
+---
+
+## ⚡ Instant Install via `npx`
+
+You can add skills directly to any project in seconds using `npx`:
+
+```bash
+# List all available skills
+npx @ayobami6/skills list
+
+# Add a skill to your current project (.agents/skills/)
+npx @ayobami6/skills add pr-reviewer
+
+# Add all skills to your project
+npx @ayobami6/skills add --all
+
+# Add a skill globally for all projects on your machine (~/.gemini/config/skills/)
+npx @ayobami6/skills add --global pr-reviewer
+```
 
 ---
 
@@ -18,10 +38,9 @@ Keep your AI agent equipped with the same specialized workflows, review checklis
 
 ---
 
-## ⚡ Quickstart: Use Across Any Project
+## 🛠️ Alternative Installation Methods
 
-### Method 1: Global Setup (Recommended)
-Make all skills in this repo globally available to your agent across **every project and workspace** on your machine:
+### Method 1: Global Setup via Git (Always in sync)
 
 1. **Clone this repository** to a local directory (e.g., `~/projects/skills`):
    ```bash
@@ -41,17 +60,15 @@ Make all skills in this repo globally available to your agent across **every pro
    ```
 
 3. **Stay Updated**:
-   Whenever new skills or updates are published, pull the latest changes:
    ```bash
    cd ~/projects/skills && git pull
    ```
 
 ---
 
-### Method 2: Project-Level / Team Sharing
-If you want to bundle these skills inside a specific project repository so your entire team automatically shares them:
+### Method 2: Git Submodule (For Teams)
 
-1. **Add as a Git Submodule**:
+1. **Add as a Git Submodule** in your project:
    ```bash
    git submodule add https://github.com/Ayobami6/skills.git .agents/shared-skills
    ```
@@ -69,7 +86,7 @@ If you want to bundle these skills inside a specific project repository so your 
 
 ---
 
-## 🛠️ Contributing
+## 🤝 Contributing
 
 We welcome community contributions! Whether it's adding a new skill, refining checklists, or fixing typos:
 

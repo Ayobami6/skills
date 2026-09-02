@@ -59,3 +59,4 @@ Please treat all contributors and users with respect. Follow the [Code of Conduc
 ## 📄 License
 
 By contributing, you agree that your contributions will be licensed under the [MIT License](./LICENSE).
+
