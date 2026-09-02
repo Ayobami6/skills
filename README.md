@@ -12,20 +12,26 @@ Equip your AI agents with specialized workflows, review checklists, and automate
 
 ## ⚡ Instant Install via `npx`
 
-You can add skills directly to any project in seconds using `npx`:
+You can add skills directly to any project without cloning or installing anything:
 
+### Directly from GitHub (No NPM Publish Needed)
 ```bash
 # List all available skills
-npx @ayobami6/skills list
+npx github:Ayobami6/skills list
 
 # Add a skill to your current project (.agents/skills/)
-npx @ayobami6/skills add pr-reviewer
+npx github:Ayobami6/skills add pr-reviewer
 
 # Add all skills to your project
-npx @ayobami6/skills add --all
+npx github:Ayobami6/skills add --all
 
 # Add a skill globally for all projects on your machine (~/.gemini/config/skills/)
-npx @ayobami6/skills add --global pr-reviewer
+npx github:Ayobami6/skills add --global pr-reviewer
+```
+
+### From NPM Registry (If Published)
+```bash
+npx @ayobami6/skills add pr-reviewer
 ```
 
 ---
@@ -83,6 +89,20 @@ npx @ayobami6/skills add --global pr-reviewer
      ]
    }
    ```
+
+---
+
+## 🚀 Publishing to NPM
+
+To make `npx @ayobami6/skills` work directly:
+
+```bash
+# 1. Log in to your npm account (free)
+npm login
+
+# 2. Publish the package publicly
+npm publish --access public
+```
 
 ---
 
