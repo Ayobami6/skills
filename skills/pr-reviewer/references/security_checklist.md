@@ -29,3 +29,4 @@ When evaluating code for security risks, verify each of the following areas:
 ## 6. Dependency & Supply Chain Security
 - [ ] No known vulnerable dependencies introduced.
 - [ ] Package manifest versions are pinned appropriately.
+

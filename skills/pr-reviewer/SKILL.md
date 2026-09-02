@@ -3,72 +3,93 @@ name: pr-reviewer
 description: >-
   Thoroughly reviews pull requests, git diffs, and code changes for correctness,
   security vulnerabilities, edge cases, performance, architecture, test coverage,
-  and code readability. Use whenever the user asks to review a PR, review code,
-  analyze a git diff, audit changes, or check code before committing or merging.
+  and code readability. Supports checking open GitHub PRs and submitting reviews
+  (approvals, comments, requested changes, and inline comments) directly using GitHub MCP tools.
+  Use whenever the user asks to review a PR, check open PRs, audit a diff, or submit a code review.
 ---
 
 # PR Reviewer Skill
 
-This skill guides you through conducting comprehensive, actionable, and structured pull request (PR) reviews.
+This skill guides you through finding open pull requests, reviewing code changes comprehensively, and submitting structured reviews directly to GitHub via GitHub MCP tools or local git.
 
 ---
 
-## Review Workflow
+## Capabilities & Modes
 
-Follow this step-by-step procedure when conducting a review:
-
-### Step 1: Discover and Scope the Changes
-- Inspect the commit history and diff using git commands (e.g. `git diff main...HEAD`, `git diff --stat`, `git log -n 5`).
-- Determine the scope: Is this a feature, bug fix, refactor, dependency upgrade, or breaking change?
-- Identify the blast radius (which services, modules, or database schemas are affected).
-
-### Step 2: Architecture & Design
-- **Single Responsibility**: Are modules and functions focused on a single responsibility?
-- **Modularity & Reusability**: Are new components appropriately decoupled?
-- **Backwards Compatibility**: Do API signature changes or schema changes break existing consumers?
-- **Contract & Type Integrity**: Are types, schemas, and interfaces strictly defined without loose casts?
-
-### Step 3: Correctness, Logic & Edge Cases
-- **Null / Undefined handling**: Are optional fields, missing parameters, and empty collections safely handled?
-- **Error Handling**: Are errors caught, logged with appropriate context, and handled gracefully rather than swallowed?
-- **Async & Concurrency**: Are promises/futures awaited properly? Are there race conditions, deadlocks, or unhandled rejections?
-- **Boundary Conditions**: Are loops, array indices, off-by-one conditions, and pagination offsets tested properly?
-
-### Step 4: Security Audit
-Check against [security_checklist.md](./references/security_checklist.md):
-- Injection vulnerabilities (SQL, Command, XSS, Template injection).
-- Authentication & Authorization checks.
-- Hardcoded secrets, API keys, or sensitive credentials in code or configs.
-- Unsanitized inputs and path traversal risks.
-
-### Step 5: Performance & Resource Management
-Check against [performance_checklist.md](./references/performance_checklist.md):
-- N+1 query patterns or unindexed queries.
-- Excessive memory allocations, memory leaks, or unclosed streams/file handles.
-- Heavy computations inside loops or render cycles.
-
-### Step 6: Test Coverage & Quality
-- Are new/modified execution branches covered by unit or integration tests?
-- Do the tests verify edge cases and failure modes, not just the happy path?
-- Are tests deterministic (no flaky time/sleep dependencies, mocked network calls)?
+This skill supports two primary review modes:
+1. **GitHub MCP Mode**: Interacting with remote GitHub repositories to find open PRs, fetch diffs, and publish reviews (with inline comments and approval/change-request events).
+2. **Local Git Mode**: Inspecting local git branches, working tree diffs, and pre-commit changes.
 
 ---
 
-## Output Format
+## Workflow with GitHub MCP Tools
 
-Always format the review using the standard template in [review_template.md](./references/review_template.md).
+When interacting with a remote GitHub repository (`github-mcp-server` or `remote-github`), follow this automated flow:
 
-### Severity Levels
-Categorize all review findings with clear severity tags:
-- **`[BLOCKER]`**: Critical bugs, security vulnerabilities, data loss risks, or severe regressions that must be resolved before merging.
-- **`[WARNING]`**: Performance concerns, unhandled edge cases, missing test coverage, or architectural design flaws.
-- **`[SUGGESTION]`**: Opportunities for refactoring, cleaner syntax, minor optimization, or improved readability.
-- **`[NIT]`**: Minor style, naming, or typo improvements (non-blocking).
+### 1. Check for Open Pull Requests
+- **List repository PRs**: Call `list_pull_requests` with `owner`, `repo`, `state: "open"`, `sort: "updated"`, `direction: "desc"`.
+- **Search PRs requested for review**: Call `search_pull_requests` with queries like `is:pr is:open review-requested:@me repo:owner/repo`.
+
+### 2. Retrieve PR Details & Diff
+- **PR Metadata**: Call `pull_request_read` with `method: "get"`, `owner`, `repo`, `pullNumber`.
+- **Changed Files**: Call `pull_request_read` with `method: "get_files"`, `owner`, `repo`, `pullNumber`.
+- **Diff Contents**: Call `pull_request_read` with `method: "get_diff"`, `owner`, `repo`, `pullNumber`.
+- **CI / Check Runs Status**: Call `pull_request_read` with `method: "get_check_runs"`, `owner`, `repo`, `pullNumber`.
+
+### 3. Conduct the In-Depth Review
+Follow the review criteria:
+- **Architecture & Design**: Separation of concerns, interface contracts, backward compatibility.
+- **Correctness & Edge Cases**: Nil/null safety, off-by-one errors, error propagation, async race conditions.
+- **Security**: Refer to [security_checklist.md](./references/security_checklist.md).
+- **Performance**: Refer to [performance_checklist.md](./references/performance_checklist.md).
+- **Tests**: Verify branch coverage, mock boundaries, test determinism.
+
+### 4. Submit the Review to GitHub
+
+Choose between a single-submission review or an inline-comment review:
+
+#### A. Single Review Submission (Summary + Findings)
+Call `pull_request_review_write`:
+- `method`: `"create"`
+- `owner`: `<owner>`
+- `repo`: `<repo>`
+- `pullNumber`: `<pullNumber>`
+- `event`: `"APPROVE"` | `"REQUEST_CHANGES"` | `"COMMENT"`
+- `body`: Markdown review formatted according to [review_template.md](./references/review_template.md).
+
+#### B. Review with Line-Specific Inline Comments
+1. **Create Pending Review**:
+   Call `pull_request_review_write` with `method: "create"`, `owner`, `repo`, `pullNumber` (omit `event` so it remains pending).
+2. **Add Inline Comments**:
+   Call `add_comment_to_pending_review` for each line-specific finding:
+   - `path`: File relative path (e.g. `src/auth.ts`)
+   - `line`: Line number in the new diff
+   - `side`: `"RIGHT"`
+   - `subjectType`: `"LINE"`
+   - `body`: Explanation with suggested code fix.
+3. **Submit Pending Review**:
+   Call `pull_request_review_write` with:
+   - `method`: `"submit_pending"`
+   - `owner`, `repo`, `pullNumber`
+   - `event`: `"APPROVE"` | `"REQUEST_CHANGES"` | `"COMMENT"`
+   - `body`: Summary overview of the review.
+
+> See [github_mcp_integration.md](./references/github_mcp_integration.md) for full tool parameter details and examples.
 
 ---
 
-## Code Suggestion Guidelines
-When pointing out an issue, always provide:
-1. **The Problem**: Clear explanation of why the current code is problematic.
-2. **The Context/Location**: Specific file path and line number reference.
-3. **The Fix**: A concrete, copy-pasteable code snippet showing the suggested resolution.
+## Local Review Workflow (Git CLI)
+
+When reviewing local changes before commit or push:
+1. Inspect diffs: `git diff main...HEAD` or `git diff --staged`.
+2. Inspect log: `git log -n 5 --stat`.
+3. Format feedback using [review_template.md](./references/review_template.md).
+
+---
+
+## Severity Categorization
+
+- **`[BLOCKER]`**: Critical bugs, security vulnerabilities, breaking API changes, or data loss risks. (Use `event: "REQUEST_CHANGES"` on GitHub).
+- **`[WARNING]`**: Performance bottlenecks, missing tests, unhandled edge cases. (Use `event: "COMMENT"` or `"REQUEST_CHANGES"` depending on severity).
+- **`[SUGGESTION]`**: Code cleanup, refactoring, ergonomics. (Use `event: "APPROVE"` or `"COMMENT"`).
+- **`[NIT]`**: Minor style, typos, formatting (non-blocking).

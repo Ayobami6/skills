@@ -8,7 +8,16 @@ A centralized collection of custom agent skills that can be synchronized via Git
 
 | Skill | Description | Location |
 | :--- | :--- | :--- |
-| **`pr-reviewer`** | Reviews pull requests and git diffs for correctness, security, performance, test coverage, and code quality. | [`skills/pr-reviewer/SKILL.md`](./skills/pr-reviewer/SKILL.md) |
+| **`pr-reviewer`** | Reviews pull requests and git diffs for correctness, security, performance, test coverage, and code quality. Supports finding open PRs and submitting reviews (approvals, comments, change requests, inline diff notes) directly via GitHub MCP tools. | [`skills/pr-reviewer/SKILL.md`](./skills/pr-reviewer/SKILL.md) |
+
+---
+
+## Skill Capabilities: `pr-reviewer`
+
+- 🔍 **PR Discovery**: Find open PRs or review requests via `list_pull_requests` & `search_pull_requests`.
+- 📑 **Diff & File Inspection**: Read full PR diffs, file lists, and CI check runs via `pull_request_read`.
+- 🛡️ **Comprehensive Audits**: Check against structured [Security](./skills/pr-reviewer/references/security_checklist.md) and [Performance](./skills/pr-reviewer/references/performance_checklist.md) checklists.
+- 💬 **Direct Review Submission**: Submit reviews with `APPROVE`, `REQUEST_CHANGES`, `COMMENT`, and attach inline code suggestions via `pull_request_review_write` & `add_comment_to_pending_review`.
 
 ---
 
@@ -18,7 +27,7 @@ A centralized collection of custom agent skills that can be synchronized via Git
 
 To make all skills in this repo available in every project you work on:
 
-1. Clone this repository (or keep your existing clone) at a fixed location, e.g. `~/projects/skills`:
+1. Clone this repository at `~/projects/skills`:
    ```bash
    git clone https://github.com/Ayobami6/skills.git ~/projects/skills
    ```

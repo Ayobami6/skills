@@ -24,3 +24,4 @@ When evaluating code for performance regressions and resource efficiency, check 
 ## 5. Frontend & UI (if applicable)
 - [ ] Avoid redundant re-renders or unmemoized expensive calculations (`useMemo`, `useCallback`, `React.memo`).
 - [ ] Asset bundle impact: Large third-party libraries are not imported when lightweight alternatives or tree-shaking exist.
+
