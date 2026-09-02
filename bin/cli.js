@@ -181,7 +181,7 @@ async function listSkills() {
 async function addSkill(skillNames, options) {
   const available = await getAvailableSkills();
   const isGlobal = options.global || options.g;
-  
+
   const targetBaseDir = isGlobal
     ? path.join(os.homedir(), '.gemini', 'config', 'skills')
     : path.resolve(process.cwd(), '.agents', 'skills');
@@ -300,3 +300,4 @@ main().catch((err) => {
   error(`Unexpected error: ${err.message}`);
   process.exit(1);
 });
+
