@@ -40,6 +40,7 @@ npx skills update
 
 | Skill | Description | Direct Install Command | Location |
 | :--- | :--- | :--- | :--- |
+| **`clean-code`** | Enforces software craftsmanship and programming best practices: SOLID principles, design patterns, TDD, defensive error handling, refactoring code smells, and modular architecture across TypeScript, Python, Go, Rust, and Java. | `npx skills add Ayobami6/skills --skill clean-code` | [`skills/clean-code/SKILL.md`](./skills/clean-code/SKILL.md) |
 | **`pr-reviewer`** | Reviews pull requests and git diffs for correctness, security vulnerabilities (OWASP), performance bottlenecks, test coverage, and code architecture. Discovers open PRs and submits reviews with approvals, change requests, and inline code suggestions directly via GitHub MCP tools. | `npx skills add Ayobami6/skills --skill pr-reviewer` | [`skills/pr-reviewer/SKILL.md`](./skills/pr-reviewer/SKILL.md) |
 
 ---
