@@ -172,9 +172,10 @@ async function listSkills() {
   }
 
   log(`${colors.dim}To install a skill in your project:${colors.reset}`);
-  log(`  ${colors.yellow}npx @ayobami6/skills add <skill-name>${colors.reset}\n`);
+  log(`  ${colors.yellow}npx github:${GITHUB_REPO} add <skill-name>${colors.reset}`);
+  log(`  ${colors.dim}(or: npx @ayobami6/skills add <skill-name> if published to npm)${colors.reset}\n`);
   log(`${colors.dim}To install globally on your machine:${colors.reset}`);
-  log(`  ${colors.yellow}npx @ayobami6/skills add --global <skill-name>${colors.reset}\n`);
+  log(`  ${colors.yellow}npx github:${GITHUB_REPO} add --global <skill-name>${colors.reset}\n`);
 }
 
 // Command: add
