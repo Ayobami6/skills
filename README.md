@@ -1,38 +1,35 @@
-# Agent Skills Repository
+# 🤖 Antigravity Agent Skills
 
-A centralized collection of custom agent skills that can be synchronized via GitHub and used across any workspace or project.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](./CONTRIBUTING.md)
+[![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/)
+
+An open-source, curated collection of modular skills for **Google Antigravity** and compatible AI coding agents.
+
+Keep your AI agent equipped with the same specialized workflows, review checklists, and automated procedures across all your projects and machines.
 
 ---
 
-## Included Skills
+## 📦 Available Skills
 
 | Skill | Description | Location |
 | :--- | :--- | :--- |
-| **`pr-reviewer`** | Reviews pull requests and git diffs for correctness, security, performance, test coverage, and code quality. Supports finding open PRs and submitting reviews (approvals, comments, change requests, inline diff notes) directly via GitHub MCP tools. | [`skills/pr-reviewer/SKILL.md`](./skills/pr-reviewer/SKILL.md) |
+| **`pr-reviewer`** | Reviews pull requests and git diffs for correctness, security vulnerabilities (OWASP), performance, test coverage, and code design. Discovers open PRs and submits reviews with approvals, change requests, and inline code suggestions directly via GitHub MCP tools. | [`skills/pr-reviewer/SKILL.md`](./skills/pr-reviewer/SKILL.md) |
 
 ---
 
-## Skill Capabilities: `pr-reviewer`
+## ⚡ Quickstart: Use Across Any Project
 
-- 🔍 **PR Discovery**: Find open PRs or review requests via `list_pull_requests` & `search_pull_requests`.
-- 📑 **Diff & File Inspection**: Read full PR diffs, file lists, and CI check runs via `pull_request_read`.
-- 🛡️ **Comprehensive Audits**: Check against structured [Security](./skills/pr-reviewer/references/security_checklist.md) and [Performance](./skills/pr-reviewer/references/performance_checklist.md) checklists.
-- 💬 **Direct Review Submission**: Submit reviews with `APPROVE`, `REQUEST_CHANGES`, `COMMENT`, and attach inline code suggestions via `pull_request_review_write` & `add_comment_to_pending_review`.
+### Method 1: Global Setup (Recommended)
+Make all skills in this repo globally available to your agent across **every project and workspace** on your machine:
 
----
-
-## How to Use Across Any Project
-
-### Method 1: Global Setup (All Projects on your Machine)
-
-To make all skills in this repo available in every project you work on:
-
-1. Clone this repository at `~/projects/skills`:
+1. **Clone this repository** to a local directory (e.g., `~/projects/skills`):
    ```bash
    git clone https://github.com/Ayobami6/skills.git ~/projects/skills
    ```
 
-2. Register the path in your global config file `~/.gemini/config/skills.json`:
+2. **Register the skills in your Antigravity global config**:
+   Create or edit `~/.gemini/config/skills.json`:
    ```json
    {
      "entries": [
@@ -43,20 +40,23 @@ To make all skills in this repo available in every project you work on:
    }
    ```
 
-3. Whenever you add or update skills, push to GitHub. On any machine, simply run `git pull` in this folder to immediately update your agent's capabilities everywhere.
+3. **Stay Updated**:
+   Whenever new skills or updates are published, pull the latest changes:
+   ```bash
+   cd ~/projects/skills && git pull
+   ```
 
 ---
 
 ### Method 2: Project-Level / Team Sharing
+If you want to bundle these skills inside a specific project repository so your entire team automatically shares them:
 
-To share this skill set with teammates in a specific repository:
-
-1. Add this repository as a git submodule in your project:
+1. **Add as a Git Submodule**:
    ```bash
    git submodule add https://github.com/Ayobami6/skills.git .agents/shared-skills
    ```
 
-2. Create `.agents/skills.json` in your project root:
+2. **Configure `.agents/skills.json`** at the root of your project:
    ```json
    {
      "entries": [
@@ -69,11 +69,16 @@ To share this skill set with teammates in a specific repository:
 
 ---
 
-## Creating a New Skill
+## 🛠️ Contributing
 
-To add a new skill to this repository:
+We welcome community contributions! Whether it's adding a new skill, refining checklists, or fixing typos:
 
-1. Create a new directory under `skills/<skill-name>/`.
-2. Create a `SKILL.md` with YAML frontmatter (`name` and `description`).
-3. Add any optional `references/`, `scripts/`, or `examples/`.
-4. Commit and push to GitHub!
+1. See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for skill authoring guidelines and formatting standards.
+2. Use the [`templates/skill-template`](./templates/skill-template) as a starting boilerplate.
+3. Open a Pull Request!
+
+---
+
+## 📄 License
+
+This repository is distributed under the [MIT License](./LICENSE).
