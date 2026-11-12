@@ -15,7 +15,10 @@
     "code-review",
     "pr-review",
     "mcp",
-    "cli"
+    "cli",
+    "flutterwave",
+    "payments",
+    "fintech"
   ],
   "author": "Ayobami",
   "license": "MIT",
