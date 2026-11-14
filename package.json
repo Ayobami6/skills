@@ -18,6 +18,9 @@
     "cli",
     "flutterwave",
     "payments",
+    "obiex",
+    "crypto",
+    "trading",
     "fintech"
   ],
   "author": "Ayobami",
