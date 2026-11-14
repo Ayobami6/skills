@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Created `psprelay-integration` skill for downstream product microservices integrating with PSP Relay (github.com/Ayobami6/psprelay):
+  - Core downstream integration skill document (`SKILL.md`) covering downstream HMAC-SHA256 signature verification (`X-PSPRelay-Signature`), idempotent event processing via `X-PSPRelay-Event-ID`, strict <5-second fast acknowledgment, outbound payment reference tagging (HMAC prefix tokens and plaintext prefixes), exact byte-for-byte provider payloads, retry tracking (`X-PSPRelay-Retry-Attempt`), and Dead-Letter Queue (DLQ) recovery.
+  - Relayed request headers and provider payload reference (`references/api_and_payload_reference.md`) covering Paystack (`charge.success`), Flutterwave (`charge.completed`), Monnify (`SUCCESSFUL_TRANSACTION`), and Admin API replay endpoints (`POST /v1/admin/events/:id/replay`).
+  - Cryptographic signature verification guide (`references/downstream_verification.md`) with constant-time HMAC-SHA256 implementations across Express, Next.js App Router, FastAPI, Django, Go, and Rust.
+  - Outbound payment reference tagging guide (`references/outbound_reference_tagging.md`) covering HMAC prefix token generation (`hex(HMAC-SHA256(prefix, encodeKey))[:12] + "_" + internalID`), plaintext prefixes, and provider parameter mapping (Paystack `reference`, Flutterwave `tx_ref`, Monnify `paymentReference`).
+  - Idempotency and event handling guide (`references/idempotency_and_event_handling.md`) covering database deduplication schemas (`processed_relay_events`), retry counters, fast 2xx responses (<5s), and background worker offloading.
+  - Troubleshooting and DLQ guide (`references/troubleshooting_and_dlq.md`) covering 401 signature mismatches, 5-second timeout diagnostics, unmatched reference routing, and manual replay API operations.
+- Added `psprelay-integration` to `README.md` and updated `package.json` keywords.
 - Created `buffer-integration` skill for Buffer GraphQL API, CLI, and hosted MCP server integration:
   - Core integration skill document (`SKILL.md`) covering GraphQL single-endpoint architecture (`https://api.buffer.com`), bearer token authentication, account hierarchy (Organization $\to$ Channels $\to$ Posts), scheduling modes (`addToQueue`, `customScheduled`, `shareNow`, `shareNext`), platform metadata, and Mermaid workflows.
   - Complete GraphQL schema and API reference (`references/api_reference.md`) covering queries (`account`, `channels`, `posts`, `post`, `ideas`), mutations (`createPost`, `editPost`, `deletePost`, `createIdea`), input types, enums (`ShareMode`, `SchedulingType`, `PostStatus`), and error models.
