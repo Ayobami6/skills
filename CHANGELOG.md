@@ -16,4 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Bank account resolution (NUBAN), transfer fee queries, and single/bulk outbound payout implementation guide (`references/transfers_and_payouts.md`).
   - Dedicated Virtual Accounts (DVA / BVN KYC) and Subaccount Split Payments guide (`references/virtual_accounts_and_subaccounts.md`).
   - Sandbox test cards, mock OTPs, test bank accounts, error simulation codes, and troubleshooting guide (`references/troubleshooting_and_testing.md`).
-- Added `flutterwave-integration` to `README.md` and updated `package.json` keywords.
+- Created `obiex-integration` skill for Obiex Crypto & Fiat API integration:
+  - Core integration skill document (`SKILL.md`) covering essential directives, base URLs, HMAC-SHA256 request authentication, system currency and network codes, rate limits, and Mermaid integration workflows.
+  - Complete v1 REST API endpoint reference (`references/api_reference.md`).
+  - Cryptographic authentication and request signing guide (`references/authentication_and_signing.md`) with HMAC-SHA256 implementations across Node.js/TypeScript, Python, Go, and Rust.
+  - Cryptocurrency deposit addresses and Multi-Customer Business Collections guide (`references/collections_and_deposits.md`) covering `uniqueUserIdentifier` idempotency and BVN/NIN virtual account KYC name matching.
+  - Request for Quote (RFQ) trading and instant currency swaps guide (`references/trading_and_swaps.md`) with 100 req/hr quote rate limit handling and 30-second expiration windows.
+  - Outbound payouts and off-ramping guide (`references/payouts_and_withdrawals.md`) covering on-chain crypto debits (`POST /wallets/ext/debit/crypto`), Nigerian bank account resolution, fiat payouts (`POST /wallets/ext/debit/fiat`), and withdrawal status lifecycles.
+  - Real-time webhook lifecycle and security guide (`references/webhook_handling.md`) covering `DEPOSIT`, `WITHDRAWAL`, and `COLLECTION` event payloads, server-side anti-tampering verification, and Express, Next.js, FastAPI implementations.
+  - Testing, staging sandbox setup, and troubleshooting guide (`references/troubleshooting_and_testing.md`).
+- Added `flutterwave-integration` and `obiex-integration` to `README.md` and updated `package.json` keywords.
