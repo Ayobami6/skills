@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Created `buffer-integration` skill for Buffer GraphQL API, CLI, and hosted MCP server integration:
+  - Core integration skill document (`SKILL.md`) covering GraphQL single-endpoint architecture (`https://api.buffer.com`), bearer token authentication, account hierarchy (Organization $\to$ Channels $\to$ Posts), scheduling modes (`addToQueue`, `customScheduled`, `shareNow`, `shareNext`), platform metadata, and Mermaid workflows.
+  - Complete GraphQL schema and API reference (`references/api_reference.md`) covering queries (`account`, `channels`, `posts`, `post`, `ideas`), mutations (`createPost`, `editPost`, `deletePost`, `createIdea`), input types, enums (`ShareMode`, `SchedulingType`, `PostStatus`), and error models.
+  - Authentication, CLI, and MCP setup guide (`references/authentication_and_setup.md`) covering personal API keys, OAuth 2.0 PKCE, official `@bufferapp/cli` (`buffer init`, `buffer doctor`), and hosted MCP server configuration (`https://mcp.buffer.com/mcp`).
+  - Channels and organizations management guide (`references/channels_and_organizations.md`) covering account hierarchy resolution, channel filtering across 11+ platforms, and queue pause state handling.
+  - Post creation, scheduling, editing, and deletion guide (`references/posts_and_scheduling.md`) with scheduling modes, public HTTPS media assets, drafts, and Relay cursor pagination.
+  - Platform-specific metadata guide (`references/network_specific_metadata.md`) covering Instagram (Reels, Stories, Feed), Threads, X character limits & threads, LinkedIn document carousels (PDF), TikTok vertical video specs, Pinterest board selection, and accessibility alt text.
+  - Organization ideas and draft workflows guide (`references/ideas_and_drafts.md`) covering brainstorm idea capture (`createIdea`), converting ideas into posts, and team approval states.
+  - Rate limits and polling synchronization guide (`references/rate_limits_and_polling.md`) covering plan tiers (Free/Essentials/Team), response headers (`RateLimit`, `RateLimit-Policy`, `Retry-After`), exponential backoff on HTTP 429, and timestamp-based polling workers.
+- Added `buffer-integration` to `README.md` and updated `package.json` keywords.
 - Created `flutterwave-integration` skill for Flutterwave API v3 integration:
   - Core integration skill document (`SKILL.md`) covering essential directives, major currency unit rules, status invariants (`status: "successful"`), and Mermaid workflows.
   - Complete API v3 endpoint reference (`references/api_reference.md`).

@@ -21,7 +21,11 @@
     "obiex",
     "crypto",
     "trading",
-    "fintech"
+    "fintech",
+    "buffer",
+    "social-media",
+    "scheduling",
+    "graphql"
   ],
   "author": "Ayobami",
   "license": "MIT",
