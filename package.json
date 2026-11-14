@@ -25,7 +25,11 @@
     "buffer",
     "social-media",
     "scheduling",
-    "graphql"
+    "graphql",
+    "psprelay",
+    "webhooks",
+    "gateway",
+    "fanout"
   ],
   "author": "Ayobami",
   "license": "MIT",
